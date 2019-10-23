@@ -1,7 +1,7 @@
 # Личный проект «Readme»
 
 * Студент: [Mukhammadjavokhirbek Suratov](https://up.htmlacademy.ru/php/11/user/885383).
-* Наставник: `Неизвестно`.
+* Наставник: [Фёдор Пестунов](https://htmlacademy.ru/profile/id772819).
 
 ---
 
