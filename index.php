@@ -245,14 +245,14 @@ $posts = [
                     <h2><?=$post['heading'];?></h2>
                 </header>
                 <div class="post__main">
-                    <?php if ($val['type'] == 'post-quote'): ?>
+                    <?php if ($post['type'] == 'post-quote'): ?>
                     <blockquote>
                         <p>
                             <?=$post['content'];?>
                         </p>
                         <cite><?=$post['username'];?></cite>
                     </blockquote>
-                    <?php elseif ($val['type'] == 'post-link'): ?>
+                    <?php elseif ($post['type'] == 'post-link'): ?>
                     <div class="post-link__wrapper">
                         <a class="post-link__external" href="http://" title="Перейти по ссылке">
                             <div class="post-link__info-wrapper">
@@ -266,16 +266,16 @@ $posts = [
                             <span><?=$post['content'];?></span>
                         </a>
                     </div>
-                    <?php elseif ($val['type'] == 'post-photo'): ?>
+                    <?php elseif ($post['type'] == 'post-photo'): ?>
                     <div class="post-photo__image-wrapper">
                         <img src="img/<?=$post['content'];?>" alt="Фото от пользователя" width="360" height="240">
                     </div>
-                    <?php elseif ($val['type'] == 'post-text'): ?>
+                    <?php elseif ($post['type'] == 'post-text'): ?>
                     <p><?=$post['content'];?></p>
-                    <?php elseif ($val['type'] == 'post-video'): ?>
+                    <?php elseif ($post['type'] == 'post-video'): ?>
                     <div class="post-video__block">
                         <div class="post-video__preview">
-                            <?=embed_youtube_cover($val['content']); ?>
+                            <?=embed_youtube_cover($post['content']); ?>
                             <img src="img/coast-medium.jpg" alt="Превью к видео" width="360" height="188">
                         </div>
                         <a href="post-details.html" class="post-video__play-big button">
