@@ -39,6 +39,21 @@ $posts = [
         'avatar' => 'userpic.jpg'
     ]
 ];
+function truncateTextIfNecessary ($text, $maxTextLength = 300) {
+    if (strlen($text) < $maxTextLength) {
+        return '<p>' . $text . '</p>';
+    }
+
+    $textAsArray = explode(' ', $text);
+    $truncatedText = '';
+    $index = 0;
+    while (strlen($truncatedText . ' ' . $textAsArray[$index]) < $maxTextLength) {
+        $truncatedText .= ' ' . $textAsArray[$index];
+        $index++;
+    }
+    $result = '<p>' . $truncatedText . '...</p><a class="post-text__more-link" href="#">Читать далее</a>';
+    return $result;
+}
 ?>
 <!DOCTYPE html>
 <html lang="ru">
@@ -271,7 +286,7 @@ $posts = [
                         <img src="img/<?=$post['content'];?>" alt="Фото от пользователя" width="360" height="240">
                     </div>
                     <?php elseif ($post['type'] == 'post-text'): ?>
-                    <p><?=$post['content'];?></p>
+                    <?= truncateTextIfNecessary($post['content']); ?>
                     <?php elseif ($post['type'] == 'post-video'): ?>
                     <div class="post-video__block">
                         <div class="post-video__preview">
