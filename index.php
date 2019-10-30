@@ -36,7 +36,7 @@ $posts = [
         'type' => 'post-link',
         'content' => 'www.htmlacademy.ru',
         'username' => 'Владик',
-        'avatar' => '	userpic.jpg'
+        'avatar' => 'userpic.jpg'
     ]
 ];
 ?>
@@ -239,20 +239,20 @@ $posts = [
             </div>
         </div>
         <div class="popular__posts">
-            <?php foreach ($posts as $key => $val): ?>
-            <article class="popular__post post <?=$val['type'];?>">
+            <?php foreach ($posts as $post): ?>
+            <article class="popular__post post <?=$post['type'];?>">
                 <header class="post__header">
-                    <h2><?=$val['heading'];?></h2>
+                    <h2><?=$post['heading'];?></h2>
                 </header>
                 <div class="post__main">
                     <?php if ($val['type'] == 'post-quote'): ?>
                     <blockquote>
                         <p>
-                            <?=$val['content'];?>
+                            <?=$post['content'];?>
                         </p>
-                        <cite><?=$val['username'];?></cite>
+                        <cite><?=$post['username'];?></cite>
                     </blockquote>
-                    <? elseif ($val['type'] == 'post-link'): ?>
+                    <?php elseif ($val['type'] == 'post-link'): ?>
                     <div class="post-link__wrapper">
                         <a class="post-link__external" href="http://" title="Перейти по ссылке">
                             <div class="post-link__info-wrapper">
@@ -260,19 +260,19 @@ $posts = [
                                     <img src="https://www.google.com/s2/favicons?domain=vitadental.ru" alt="Иконка">
                                 </div>
                                 <div class="post-link__info">
-                                    <h3><?=$val['heading'];?></h3>
+                                    <h3><?=$post['heading'];?></h3>
                                 </div>
                             </div>
-                            <span><?=$val['content'];?></span>
+                            <span><?=$post['content'];?></span>
                         </a>
                     </div>
-                    <? elseif ($val['type'] == 'post-photo'): ?>
+                    <?php elseif ($val['type'] == 'post-photo'): ?>
                     <div class="post-photo__image-wrapper">
-                        <img src="img/<?=$val['content'];?>" alt="Фото от пользователя" width="360" height="240">
+                        <img src="img/<?=$post['content'];?>" alt="Фото от пользователя" width="360" height="240">
                     </div>
-                    <? elseif ($val['type'] == 'post-text'): ?>
-                    <p><?=$val['content'];?></p>
-                    <? elseif ($val['type'] == 'post-video'): ?>
+                    <?php elseif ($val['type'] == 'post-text'): ?>
+                    <p><?=$post['content'];?></p>
+                    <?php elseif ($val['type'] == 'post-video'): ?>
                     <div class="post-video__block">
                         <div class="post-video__preview">
                             <?=embed_youtube_cover($val['content']); ?>
@@ -285,16 +285,16 @@ $posts = [
                             <span class="visually-hidden">Запустить проигрыватель</span>
                         </a>
                     </div>
-                    <? endif; ?>
+                    <?php endif; ?>
                 </div>
                 <footer class="post__footer">
                     <div class="post__author">
                         <a class="post__author-link" href="#" title="Автор">
                             <div class="post__avatar-wrapper">
-                                <img class="post__author-avatar" src="img/<?=$val['avatar'];?>" alt="Аватар пользователя">
+                                <img class="post__author-avatar" src="img/<?=$post['avatar'];?>" alt="Аватар пользователя">
                             </div>
                             <div class="post__info">
-                                <b class="post__author-name"><?=$val['username'];?></b>
+                                <b class="post__author-name"><?=$post['username'];?></b>
                                 <time class="post__time" datetime="">дата</time>
                             </div>
                         </a>
