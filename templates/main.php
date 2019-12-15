@@ -140,7 +140,7 @@
                         </div>
                         <div class="post__info">
                             <b class="post__author-name"><?=htmlspecialchars($post['username']);?></b>
-                            <time class="post__time" datetime="">дата</time>
+                            <?=renderPostTimeElement($post); ?>
                         </div>
                     </a>
                 </div>

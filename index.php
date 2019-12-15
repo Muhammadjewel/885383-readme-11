@@ -1,8 +1,9 @@
 <?php
+date_default_timezone_set('Asia/Tashkent');
 require_once('helpers.php');
-$is_auth = rand(0, 1);
+$isAuth = rand(0, 1);
 
-$user_name = 'Muhammadjavohir';
+$username = 'Muhammadjavohir';
 $posts = [
     [
         'heading' => 'Цитата',
@@ -56,12 +57,42 @@ function truncateTextIfNecessary ($text, $maxTextLength = 300) {
     return $result;
 }
 
+function getRelativeTime ($postPublishedDate) {
+    $dateDiff = strtotime('now') - strtotime($postPublishedDate);
+    $dateDiffInMinutes = floor($dateDiff / 60);
+    $dateDiffInHours = floor($dateDiff / 3600);
+    $dateDiffInDays = floor($dateDiff / 86400);
+    $dateDiffInWeeks = floor($dateDiff / 604800);
+    $dateDiffInMonths = floor($dateDiffInWeeks / 4);
+
+    if ($dateDiffInMinutes < 60) {
+        $relativeTime = $dateDiffInMinutes . ' ' . get_noun_plural_form($dateDiffInMinutes, 'минута', 'минуты', 'минут') . ' назад';
+    } elseif ($dateDiffInMinutes >= 60 && $dateDiffInHours < 24) {
+        $relativeTime = $dateDiffInHours . ' ' . get_noun_plural_form($dateDiffInHours, 'час', 'часа', 'часов') . ' назад';
+    } elseif ($dateDiffInHours >= 24 && $dateDiffInDays < 7) {
+        $relativeTime = $dateDiffInDays . ' ' . get_noun_plural_form($dateDiffInDays, 'день', 'дня', 'дней') . ' назад';
+    } elseif ($dateDiffInDays >= 7 && $dateDiffInWeeks < 5) {
+        $relativeTime = $dateDiffInWeeks . ' ' . get_noun_plural_form($dateDiffInWeeks, 'неделья', 'недели', 'недель') . ' назад';
+    } elseif ($dateDiffInWeeks >= 5) {
+        $relativeTime = $dateDiffInMonths . ' ' . get_noun_plural_form($dateDiffInMonths, 'месяц', 'месяца', 'месяцов') . ' назад';
+    }
+    
+    return $relativeTime;
+}
+
+function renderPostTimeElement ($post) {
+    $randomPostDate = generate_random_date($post);    
+    $postDateForTitle = date('d.m.Y H:i', strtotime($randomPostDate));
+
+    return '<time class="post__time" title="' . $postDateForTitle . '" datetime="' . $randomPostDate . '">' . getRelativeTime($randomPostDate) . '</time>';
+}
+
 $pageContent = include_template('main.php', ['posts' => $posts]);
 $layoutContent = include_template('layout.php', [
     'pageContent' => $pageContent,
-    'username' => $user_name,
+    'username' => $username,
     'pageTitle' => 'readme: популярное',
-    'is_auth' => $is_auth
+    'isAuth' => $isAuth
 ]);
 
 print($layoutContent);
