@@ -27,7 +27,6 @@ CREATE TABLE posts (
   content_type__id INT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (content_type_id) REFERENCES content_types(id) ON DELETE CASCADE ON UPDATE CASCADE
-  -- hashtags
 );
 
 CREATE TABLE comments (
@@ -47,7 +46,9 @@ CREATE TABLE likes (
 
 CREATE TABLE subscriptions (
   author_id INT NOT NULL,
-  user_id INT NOT NULL
+  subscription INT NOT NULL,
+  FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (subscription) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE messages (
@@ -56,11 +57,11 @@ CREATE TABLE messages (
   body TEXT NOT NULL,
   sender_id INT NOT NULL,
   receiver_id INT NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
-CREATE TABLE hashtag (
+CREATE TABLE hashtags (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL UNIQUE
 );
@@ -69,4 +70,11 @@ CREATE TABLE content_types (
   id INT AUTO_INCREMENT PRIMARY KEY,
   type_name ENUM ('Текст', 'Цитата', 'Картинка', 'Видео', 'Ссылка'),
   class_name ENUM ('photo', 'video', 'text', 'quote', 'link')
+);
+
+CREATE TABLE posts_hashtags (
+  post_id INT NOT NULL,
+  hashtag_id INT NOT NULL,
+  FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (hashtag_id) REFERENCES hashtags(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
