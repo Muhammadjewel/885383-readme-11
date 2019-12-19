@@ -7,22 +7,24 @@ USE readme;
 CREATE TABLE users (
   id INT AUTO_INCREMENT PRIMARY KEY,
   registration_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  email VARCHAR(128) NOT NULL UNIQUE,
-  login VARCHAR(128) NOT NULL UNIQUE,
+  email VARCHAR(255) NOT NULL UNIQUE,
+  login VARCHAR(255) NOT NULL UNIQUE,
   password CHAR(64) NOT NULL,
-  avatar VARCHAR(128) NOT NULL UNIQUE
+  avatar VARCHAR(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE posts (
   id INT AUTO_INCREMENT PRIMARY KEY,
   created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  title VARCHAR(128) NOT NULL,
+  title VARCHAR(255) NOT NULL,
   body TEXT NOT NULL,
-  author VARCHAR(128) NOT NULL,
-  image VARCHAR(128) NOT NULL,
-  video VARCHAR(128) NOT NULL,
-  link VARCHAR(128) NOT NULL,
+  author VARCHAR(255),
+  image VARCHAR(255),
+  video VARCHAR(255),
+  link VARCHAR(255),
   views INT NOT NULL,
+  user_id INT NOT NULL,
+  content_type__id INT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (content_type_id) REFERENCES content_types(id) ON DELETE CASCADE ON UPDATE CASCADE
   -- hashtags
@@ -31,11 +33,12 @@ CREATE TABLE posts (
 CREATE TABLE comments (
   id INT AUTO_INCREMENT PRIMARY KEY,
   created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  body TEXT NOT NULL,
+  user_id INT NOT NULL,
+  post_id INT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  FOREIGN key (post_id) REFERENCES posts(id) ON DELETE CASCADE ON UPDATE CASCADE,
-  body TEXT NOT NULL
+  FOREIGN key (post_id) REFERENCES posts(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
-
 
 CREATE TABLE likes (
   user_id INT NOT NULL,
@@ -50,17 +53,20 @@ CREATE TABLE subscriptions (
 CREATE TABLE messages (
   id INT AUTO_INCREMENT PRIMARY KEY,
   created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-  body TEXT NOT NULL
+  body TEXT NOT NULL,
   sender_id INT NOT NULL,
-  receiver_id INT NOT NULL
+  receiver_id INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE hashtag (
-  -- ???
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL UNIQUE
 );
 
 CREATE TABLE content_types (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  type_name VARCHAR(128) NOT NULL UNIQUE,
-  class_name VARCHAR(128) NOT NULL UNIQUE
+  type_name ENUM ('Текст', 'Цитата', 'Картинка', 'Видео', 'Ссылка'),
+  class_name ENUM ('photo', 'video', 'text', 'quote', 'link')
 );
