@@ -1,7 +1,7 @@
 CREATE DATABASE readme
 	DEFAULT CHARACTER SET utf8
 	DEFAULT COLLATE utf8_general_ci;
-	
+
 USE readme;
 
 CREATE TABLE users (
@@ -23,16 +23,16 @@ CREATE TABLE posts (
   video VARCHAR(128) NOT NULL,
   link VARCHAR(128) NOT NULL,
   views INT NOT NULL,
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN KEY (content_type_id) REFERENCES content_types(id)
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN KEY (content_type_id) REFERENCES content_types(id) ON DELETE CASCADE ON UPDATE CASCADE
   -- hashtags
 );
 
 CREATE TABLE comments (
   id INT AUTO_INCREMENT PRIMARY KEY,
-  created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP
-  FOREIGN KEY (user_id) REFERENCES users(id),
-  FOREIGN key (post_id) REFERENCES posts(id),
+  created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN key (post_id) REFERENCES posts(id) ON DELETE CASCADE ON UPDATE CASCADE,
   body TEXT NOT NULL
 );
 
