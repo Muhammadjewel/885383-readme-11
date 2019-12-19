@@ -13,6 +13,16 @@ CREATE TABLE users (
   avatar VARCHAR(255) NOT NULL UNIQUE
 );
 
+CREATE TABLE hashtags (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  name VARCHAR(255) NOT NULL UNIQUE
+);
+CREATE TABLE content_types (
+  id INT AUTO_INCREMENT PRIMARY KEY,
+  type_name ENUM ('Текст', 'Цитата', 'Картинка', 'Видео', 'Ссылка'),
+  class_name ENUM ('photo', 'video', 'text', 'quote', 'link')
+);
+
 CREATE TABLE posts (
   id INT AUTO_INCREMENT PRIMARY KEY,
   created_date TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -24,7 +34,7 @@ CREATE TABLE posts (
   link VARCHAR(255),
   views INT NOT NULL,
   user_id INT NOT NULL,
-  content_type__id INT NOT NULL,
+  content_type_id INT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (content_type_id) REFERENCES content_types(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
@@ -59,17 +69,6 @@ CREATE TABLE messages (
   receiver_id INT NOT NULL,
   FOREIGN KEY (sender_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (receiver_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE
-);
-
-CREATE TABLE hashtags (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  name VARCHAR(255) NOT NULL UNIQUE
-);
-
-CREATE TABLE content_types (
-  id INT AUTO_INCREMENT PRIMARY KEY,
-  type_name ENUM ('Текст', 'Цитата', 'Картинка', 'Видео', 'Ссылка'),
-  class_name ENUM ('photo', 'video', 'text', 'quote', 'link')
 );
 
 CREATE TABLE posts_hashtags (
