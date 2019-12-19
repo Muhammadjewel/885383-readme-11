@@ -17,10 +17,11 @@ CREATE TABLE hashtags (
   id INT AUTO_INCREMENT PRIMARY KEY,
   name VARCHAR(255) NOT NULL UNIQUE
 );
+
 CREATE TABLE content_types (
   id INT AUTO_INCREMENT PRIMARY KEY,
   type_name ENUM ('Текст', 'Цитата', 'Картинка', 'Видео', 'Ссылка'),
-  class_name ENUM ('photo', 'video', 'text', 'quote', 'link')
+  class ENUM ('photo', 'video', 'text', 'quote', 'link')
 );
 
 CREATE TABLE posts (
@@ -77,3 +78,9 @@ CREATE TABLE posts_hashtags (
   FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE ON UPDATE CASCADE,
   FOREIGN KEY (hashtag_id) REFERENCES hashtags(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
+
+CREATE INDEX index_user_id ON users(id);
+CREATE INDEX index_user_email ON users(email);
+CREATE INDEX index_user_login ON users(login);
+CREATE INDEX index_hashtag_name ON hashtags(name);
+CREATE INDEX index_content_type_name ON content_types(type_name);
