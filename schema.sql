@@ -33,7 +33,7 @@ CREATE TABLE posts (
   image VARCHAR(255),
   video VARCHAR(255),
   link VARCHAR(255),
-  views INT NOT NULL,
+  views INT NOT NULL DEFAULT 0,
   user_id INT NOT NULL,
   content_type_id INT NOT NULL,
   FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -51,11 +51,15 @@ CREATE TABLE comments (
 );
 
 CREATE TABLE likes (
+  id INT AUTO_INCREMENT PRIMARY KEY,
   user_id INT NOT NULL,
-  post_id INT NOT NULL
+  post_id INT NOT NULL,
+  FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
+  FOREIGN key (post_id) REFERENCES posts(id) ON DELETE CASCADE ON UPDATE CASCADE
 );
 
 CREATE TABLE subscriptions (
+  id INT AUTO_INCREMENT PRIMARY KEY,
   author_id INT NOT NULL,
   subscription INT NOT NULL,
   FOREIGN KEY (author_id) REFERENCES users(id) ON DELETE CASCADE ON UPDATE CASCADE,
@@ -73,6 +77,7 @@ CREATE TABLE messages (
 );
 
 CREATE TABLE posts_hashtags (
+  id INT AUTO_INCREMENT PRIMARY KEY,
   post_id INT NOT NULL,
   hashtag_id INT NOT NULL,
   FOREIGN KEY (post_id) REFERENCES posts(id) ON DELETE CASCADE ON UPDATE CASCADE,
