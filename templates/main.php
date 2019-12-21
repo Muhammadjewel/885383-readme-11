@@ -1,5 +1,29 @@
 <?php
 
+function dbFetchData ($link, $sql, $data = []) {
+    $result = [];
+    $statement = db_get_prepare_stmt($link, $sql, $data);
+    mysqli_stmt_execute($statement);
+    $resource = mysqli_stmt_get_result($statement);
+
+    if ($resource) {
+        $result = mysqli_fetch_all($resource, MYSQLI_ASSOC);
+    }
+
+    return $result;
+}
+
+function dbInsertData($link, $sql, $data = []) {
+    $statement = db_get_prepare_stmt($link, $sql, $data);
+    $result = mysqli_stmt_execute($statement);
+
+    if ($result) {
+        $result = mysqli_insert_id($link);
+    }
+
+    return $result;
+}
+
 $connection = mysqli_init();
 mysqli_options($connection, MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1);
 mysqli_real_connect($connection, 'localhost', 'root', '', 'readme');
@@ -11,13 +35,8 @@ if (!$connection) {
     $selectContentTypesQuery = 'SELECT * FROM content_types';
     $selectPostsQuery = 'SELECT posts.*, users.login, users.avatar, content_types.class FROM posts JOIN users ON posts.user_id = users.id JOIN content_types ON posts.content_type_id = content_types.id ORDER BY views DESC';
 
-    if ($contentTypesQueryResult = mysqli_query($connection, $selectContentTypesQuery)) {
-        $contentTypes = mysqli_fetch_all($contentTypesQueryResult, MYSQLI_ASSOC);
-    }
-
-    if ($postsQueryResult = mysqli_query($connection, $selectPostsQuery)) {
-        $posts = mysqli_fetch_all($postsQueryResult, MYSQLI_ASSOC);
-    }
+    $contentTypes = dbFetchData($connection, $selectContentTypesQuery);
+    $posts = dbFetchData($connection, $selectPostsQuery);
 }
 
 ?>
