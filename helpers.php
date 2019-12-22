@@ -1,4 +1,6 @@
 <?php
+date_default_timezone_set('Asia/Tashkent');
+
 /**
  * Проверяет переданную дату на соответствие формату 'ГГГГ-ММ-ДД'
  *
@@ -258,4 +260,85 @@ function generate_random_date($index)
     $dt = date('Y-m-d H:i:s', $ts);
 
     return $dt;
+}
+
+function dbFetchData ($link, $sql, $data = []) {
+    $result = [];
+    $statement = db_get_prepare_stmt($link, $sql, $data);
+    mysqli_stmt_execute($statement);
+    $resource = mysqli_stmt_get_result($statement);
+
+    if ($resource) {
+        $result = mysqli_fetch_all($resource, MYSQLI_ASSOC);
+    }
+
+    return $result;
+}
+
+function dbInsertData($link, $sql, $data = []) {
+    $statement = db_get_prepare_stmt($link, $sql, $data);
+    $result = mysqli_stmt_execute($statement);
+
+    if ($result) {
+        $result = mysqli_insert_id($link);
+    }
+
+    return $result;
+}
+
+function truncateTextIfNecessary ($text, $maxTextLength = 300) {
+    if (strlen($text) < $maxTextLength) {
+        return '<p>' . $text . '</p>';
+    }
+
+    $textAsArray = explode(' ', $text);
+    $truncatedText = '';
+    $index = 0;
+    while (strlen($truncatedText . ' ' . $textAsArray[$index]) < $maxTextLength) {
+        $truncatedText .= ' ' . $textAsArray[$index];
+        $index++;
+    }
+    $result = '<p>' . $truncatedText . '...</p><a class="post-text__more-link" href="#">Читать далее</a>';
+    return $result;
+}
+
+function getRelativeTime ($postPublishedDate) {
+    $dateDiff = strtotime('now') - strtotime($postPublishedDate);
+    $dateDiffInMinutes = floor($dateDiff / 60);
+    $dateDiffInHours = floor($dateDiff / 3600);
+    $dateDiffInDays = floor($dateDiff / 86400);
+    $dateDiffInWeeks = floor($dateDiff / 604800);
+    $dateDiffInMonths = floor($dateDiffInWeeks / 4);
+
+    if ($dateDiffInMinutes < 60) {
+        $relativeTime = $dateDiffInMinutes . ' ' . get_noun_plural_form($dateDiffInMinutes, 'минута', 'минуты', 'минут') . ' назад';
+    } elseif ($dateDiffInMinutes >= 60 && $dateDiffInHours < 24) {
+        $relativeTime = $dateDiffInHours . ' ' . get_noun_plural_form($dateDiffInHours, 'час', 'часа', 'часов') . ' назад';
+    } elseif ($dateDiffInHours >= 24 && $dateDiffInDays < 7) {
+        $relativeTime = $dateDiffInDays . ' ' . get_noun_plural_form($dateDiffInDays, 'день', 'дня', 'дней') . ' назад';
+    } elseif ($dateDiffInDays >= 7 && $dateDiffInWeeks < 5) {
+        $relativeTime = $dateDiffInWeeks . ' ' . get_noun_plural_form($dateDiffInWeeks, 'неделья', 'недели', 'недель') . ' назад';
+    } elseif ($dateDiffInWeeks >= 5) {
+        $relativeTime = $dateDiffInMonths . ' ' . get_noun_plural_form($dateDiffInMonths, 'месяц', 'месяца', 'месяцов') . ' назад';
+    }
+    
+    return $relativeTime;
+}
+
+function renderPostTimeElement ($post) {
+    $randomPostDate = generate_random_date($post);    
+    $postDateForTitle = date('d.m.Y H:i', strtotime($randomPostDate));
+
+    return '<time class="post__time" title="' . $postDateForTitle . '" datetime="' . $randomPostDate . '">' . getRelativeTime($randomPostDate) . '</time>';
+}
+
+$username = 'Muhammadjavohir';
+
+$connection = mysqli_init();
+mysqli_options($connection, MYSQLI_OPT_INT_AND_FLOAT_NATIVE, 1);
+mysqli_real_connect($connection, 'localhost', 'root', '', 'readme');
+mysqli_set_charset($connection, 'utf8');
+
+if (!$connection) {
+    print("Ошибка подключения: " . mysqli_connect_error());
 }
