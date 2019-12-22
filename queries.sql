@@ -13,7 +13,7 @@ INSERT INTO users (email, login, password, avatar) VALUES ('someone2@gmail.com',
 INSERT INTO posts (title, body, author, image, video, link, views, user_id, content_type_id) VALUES ('Цитата', 'Мы в жизни любим только раз, а после ищем лишь похожих', null, null, null, null, 423, 1, 2);
 INSERT INTO posts (title, body, author, image, video, link, views, user_id, content_type_id) VALUES ('Игра престолов', 'Не могу дождаться начала финального сезона своего любимого сериала !', null, null, null, null, 123, 2, 1);
 INSERT INTO posts (title, body, author, image, video, link, views, user_id, content_type_id) VALUES ('Наконец, обработал фотки!', '', null, 'rock-medium.jpg', null, null, 123, 2, 3);
-INSERT INTO posts (title, body, author, image, video, link, views, user_id, content_type_id) VALUES ('Моя мечта', '', null, 'coast - medium.jpg', null, null, 123, 1, 3);
+INSERT INTO posts (title, body, author, image, video, link, views, user_id, content_type_id) VALUES ('Моя мечта', '', null, 'coast-medium.jpg', null, null, 123, 1, 3);
 INSERT INTO posts (title, body, author, image, video, link, views, user_id, content_type_id) VALUES ('Лучшие курсы', '', null, null, null, 'www.htmlacademy.ru', 123, 1, 5);
 
 /* Create comments for posts */
