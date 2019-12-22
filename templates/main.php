@@ -149,7 +149,7 @@ if (!$connection) {
                 <div class="post__author">
                     <a class="post__author-link" href="#" title="Автор">
                         <div class="post__avatar-wrapper">
-                            <img class="post__author-avatar" src="<?=htmlspecialchars($post['avatar']);?>" alt="Аватар пользователя">
+                            <img class="post__author-avatar" src="<?=htmlspecialchars($post['avatar']);?>" alt="Аватар пользователя" style="max-width: 100%;">
                         </div>
                         <div class="post__info">
                             <b class="post__author-name"><?=htmlspecialchars($post['login']);?></b>
