@@ -1,5 +1,6 @@
 <?php
 date_default_timezone_set('Asia/Tashkent');
+$isAuth = rand(0, 1);
 
 /**
  * Проверяет переданную дату на соответствие формату 'ГГГГ-ММ-ДД'
