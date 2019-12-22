@@ -7,10 +7,10 @@ $contentTypes = dbFetchData($connection, $selectContentTypesSql);
 $contentTypeQuery = filter_input(INPUT_GET, 'content_type', FILTER_SANITIZE_NUMBER_INT);
 
 if ($contentTypeQuery) {
-    $selectPostsSql = 'SELECT * FROM posts WHERE content_type_id = ? ORDER BY views DESC';
+    $selectPostsSql = 'SELECT posts.*, users.login, users.avatar, content_types.class FROM posts JOIN users ON posts.user_id = users.id JOIN content_types ON posts.content_type_id = content_types.id WHERE content_type_id = ? ORDER BY views DESC';
     $posts = dbFetchData($connection, $selectPostsSql, [$contentTypeQuery]);
 } else {
-    $selectPostsSql = 'SELECT * FROM posts ORDER BY views DESC';
+    $selectPostsSql = 'SELECT posts.*, users.login, users.avatar, content_types.class FROM posts JOIN users ON posts.user_id = users.id JOIN content_types ON posts.content_type_id = content_types.id ORDER BY views DESC';
     $posts = dbFetchData($connection, $selectPostsSql);
 }
 
