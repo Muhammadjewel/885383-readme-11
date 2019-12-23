@@ -12,6 +12,10 @@ if ($postIdQuery && $isPostExistent != null) {
     $postLikesCount = dbFetchData($connection, 'SELECT count(id) AS likes FROM likes WHERE post_id = ? GROUP BY id', [$post['id']], true)['likes'];
     $post['likes'] = $postLikesCount ?? 0;
 
+    $postAuthorSql = 'SELECT login, registration_date, avatar FROM users WHERE users.id = ?';
+    $postAuthor = dbFetchData($connection, $postAuthorSql, [$post['user_id']], true);
+    $postAuthor['reg_duration'] = getRelativeTime($postAuthor['registration_date']);
+
     if ($post['class'] == 'quote') {
         $postBody = include_template('post-quote.php', ['post' => $post]);
     } elseif ($post['class'] == 'text') {
@@ -30,7 +34,8 @@ if ($postIdQuery && $isPostExistent != null) {
 
 $pageContent = include_template('post.php', [
     'post' => $post,
-    'postBody' => $postBody
+    'postBody' => $postBody,
+    'postAuthor' => $postAuthor
 ]);
 
 $layoutContent = include_template('layout.php', [

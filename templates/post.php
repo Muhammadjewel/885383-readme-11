@@ -100,14 +100,14 @@
                 <div class="post-details__user-info user__info">
                     <div class="post-details__avatar user__avatar">
                         <a class="post-details__avatar-link user__avatar-link" href="#">
-                            <img class="post-details__picture user__picture" src="<?=$post['author_avatar'];?>" alt="Аватар пользователя">
+                            <img class="post-details__picture user__picture" src="<?=$postAuthor['avatar'];?>" alt="Аватар пользователя">
                         </a>
                     </div>
                     <div class="post-details__name-wrapper user__name-wrapper">
                         <a class="post-details__name user__name" href="#">
-                            <span><?=$post['post_author'];?></span>
+                            <span><?=$postAuthor['login'];?></span>
                         </a>
-                        <time class="post-details__time user__time" datetime="2014-03-20"><?=$post['author_reg_duration'];?> на сайте</time>
+                        <time class="post-details__time user__time" datetime="2014-03-20"><?=$postAuthor['reg_duration'];?> на сайте</time>
                     </div>
                 </div>
                 <div class="post-details__rating user__rating">
