@@ -3,7 +3,9 @@ require_once('helpers.php');
 
 $postIdQuery = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
-if ($postIdQuery) {
+$isPostExistent = dbFetchData($connection, 'SELECT * FROM posts WHERE posts.id = ?', [$postIdQuery]);
+
+if ($postIdQuery && $isPostExistent != null) {
     $selectPostByIdSql = 'SELECT posts.*, content_types.class AS class, users.login AS post_author, users.avatar AS author_avatar, users.registration_date AS author_reg_date FROM posts JOIN users ON posts.user_id = users.id JOIN content_types ON posts.content_type_id = content_types.id WHERE posts.id = ?';
     $post = dbFetchData($connection, $selectPostByIdSql, [$postIdQuery], true);
     $post['author_reg_duration'] = getRelativeTime($post['author_reg_date']);
@@ -20,7 +22,8 @@ if ($postIdQuery) {
         $postBody = include_template('post-video.php', ['post' => $post]);
     }
 } else {
-    // 404
+    http_response_code(404);
+    exit();
 }
 
 $pageContent = include_template('post.php', [
