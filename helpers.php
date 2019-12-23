@@ -263,14 +263,18 @@ function generate_random_date($index)
     return $dt;
 }
 
-function dbFetchData ($link, $sql, $data = []) {
+function dbFetchData ($link, $sql, $data = [], $oneRow = false) {
     $result = [];
     $statement = db_get_prepare_stmt($link, $sql, $data);
     mysqli_stmt_execute($statement);
     $resource = mysqli_stmt_get_result($statement);
 
     if ($resource) {
-        $result = mysqli_fetch_all($resource, MYSQLI_ASSOC);
+        if ($oneRow) {
+            $result = mysqli_fetch_assoc($resource);
+        } else {
+            $result = mysqli_fetch_all($resource, MYSQLI_ASSOC);
+        }
     }
 
     return $result;
