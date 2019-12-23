@@ -10,6 +10,9 @@ if ($postIdQuery && $isPostExistent != null) {
     $post = dbFetchData($connection, $selectPostByIdSql, [$postIdQuery], true);
     $post['author_reg_duration'] = getRelativeTime($post['author_reg_date']);
 
+    $postLikesCount = dbFetchData($connection, 'SELECT count(id) AS likes FROM likes WHERE post_id = ? GROUP BY id', [$post['id']], true)['likes'];
+    $post['likes'] = $postLikesCount ?? 0;
+
     if ($post['class'] == 'quote') {
         $postBody = include_template('post-quote.php', ['post' => $post]);
     } elseif ($post['class'] == 'text') {
