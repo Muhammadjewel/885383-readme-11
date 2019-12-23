@@ -105,7 +105,7 @@
                     </div>
                     <div class="post-details__name-wrapper user__name-wrapper">
                         <a class="post-details__name user__name" href="#">
-                            <span><?=$post['author'];?></span>
+                            <span><?=$post['post_author'];?></span>
                         </a>
                         <time class="post-details__time user__time" datetime="2014-03-20"><?=$post['author_reg_duration'];?> на сайте</time>
                     </div>
