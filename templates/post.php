@@ -107,7 +107,7 @@
                         <a class="post-details__name user__name" href="#">
                             <span><?=$post['author'];?></span>
                         </a>
-                        <time class="post-details__time user__time" datetime="2014-03-20">5 лет на сайте</time>
+                        <time class="post-details__time user__time" datetime="2014-03-20"><?=$post['author_reg_duration'];?> на сайте</time>
                     </div>
                 </div>
                 <div class="post-details__rating user__rating">
