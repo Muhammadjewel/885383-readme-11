@@ -6,9 +6,8 @@ $postIdQuery = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 $isPostExistent = dbFetchData($connection, 'SELECT * FROM posts WHERE posts.id = ?', [$postIdQuery]);
 
 if ($postIdQuery && $isPostExistent != null) {
-    $selectPostByIdSql = 'SELECT posts.*, content_types.class AS class, users.login AS post_author, users.avatar AS author_avatar, users.registration_date AS author_reg_date FROM posts JOIN users ON posts.user_id = users.id JOIN content_types ON posts.content_type_id = content_types.id WHERE posts.id = ?';
+    $selectPostByIdSql = 'SELECT posts.*, content_types.class AS class FROM posts JOIN content_types ON posts.content_type_id = content_types.id WHERE posts.id = ?';
     $post = dbFetchData($connection, $selectPostByIdSql, [$postIdQuery], true);
-    $post['author_reg_duration'] = getRelativeTime($post['author_reg_date']);
 
     $postLikesCount = dbFetchData($connection, 'SELECT count(id) AS likes FROM likes WHERE post_id = ? GROUP BY id', [$post['id']], true)['likes'];
     $post['likes'] = $postLikesCount ?? 0;
