@@ -303,8 +303,8 @@ function truncateTextIfNecessary ($text, $maxTextLength = 300) {
     return $result;
 }
 
-function getRelativeTime ($postPublishedDate) {
-    $dateDiff = strtotime('now') - strtotime($postPublishedDate);
+function getRelativeTime ($date) {
+    $dateDiff = strtotime('now') - strtotime($date);
     $dateDiffInMinutes = floor($dateDiff / 60);
     $dateDiffInHours = floor($dateDiff / 3600);
     $dateDiffInDays = floor($dateDiff / 86400);
@@ -312,25 +312,25 @@ function getRelativeTime ($postPublishedDate) {
     $dateDiffInMonths = floor($dateDiffInWeeks / 4);
 
     if ($dateDiffInMinutes < 60) {
-        $relativeTime = $dateDiffInMinutes . ' ' . get_noun_plural_form($dateDiffInMinutes, 'минута', 'минуты', 'минут') . ' назад';
+        $relativeTime = $dateDiffInMinutes . ' ' . get_noun_plural_form($dateDiffInMinutes, 'минута', 'минуты', 'минут');
     } elseif ($dateDiffInMinutes >= 60 && $dateDiffInHours < 24) {
-        $relativeTime = $dateDiffInHours . ' ' . get_noun_plural_form($dateDiffInHours, 'час', 'часа', 'часов') . ' назад';
+        $relativeTime = $dateDiffInHours . ' ' . get_noun_plural_form($dateDiffInHours, 'час', 'часа', 'часов');
     } elseif ($dateDiffInHours >= 24 && $dateDiffInDays < 7) {
-        $relativeTime = $dateDiffInDays . ' ' . get_noun_plural_form($dateDiffInDays, 'день', 'дня', 'дней') . ' назад';
+        $relativeTime = $dateDiffInDays . ' ' . get_noun_plural_form($dateDiffInDays, 'день', 'дня', 'дней');
     } elseif ($dateDiffInDays >= 7 && $dateDiffInWeeks < 5) {
-        $relativeTime = $dateDiffInWeeks . ' ' . get_noun_plural_form($dateDiffInWeeks, 'неделья', 'недели', 'недель') . ' назад';
+        $relativeTime = $dateDiffInWeeks . ' ' . get_noun_plural_form($dateDiffInWeeks, 'неделья', 'недели', 'недель');
     } elseif ($dateDiffInWeeks >= 5) {
-        $relativeTime = $dateDiffInMonths . ' ' . get_noun_plural_form($dateDiffInMonths, 'месяц', 'месяца', 'месяцов') . ' назад';
+        $relativeTime = $dateDiffInMonths . ' ' . get_noun_plural_form($dateDiffInMonths, 'месяц', 'месяца', 'месяцов');
     }
-    
+
     return $relativeTime;
 }
 
 function renderPostTimeElement ($post) {
-    $randomPostDate = generate_random_date($post);    
+    $randomPostDate = generate_random_date($post);
     $postDateForTitle = date('d.m.Y H:i', strtotime($randomPostDate));
 
-    return '<time class="post__time" title="' . $postDateForTitle . '" datetime="' . $randomPostDate . '">' . getRelativeTime($randomPostDate) . '</time>';
+    return '<time class="post__time" title="' . $postDateForTitle . '" datetime="' . $randomPostDate . '">' . getRelativeTime($randomPostDate) . ' назад</time>';
 }
 
 $username = 'Muhammadjavohir';
