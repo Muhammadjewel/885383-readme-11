@@ -116,7 +116,7 @@
                         <span class="post-details__rating-text user__rating-text">подписчиков</span>
                     </p>
                     <p class="post-details__rating-item user__rating-item user__rating-item--publications">
-                        <span class="post-details__rating-amount user__rating-amount">556</span>
+                        <span class="post-details__rating-amount user__rating-amount"><?=$postAuthor['posts_count'];?></span>
                         <span class="post-details__rating-text user__rating-text">публикаций</span>
                     </p>
                 </div>

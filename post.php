@@ -15,7 +15,7 @@ if ($postIdQuery && $requiredPost != null) {
     $postCommentsSql = 'SELECT *, count(id) AS comments_count FROM comments WHERE post_id = ? GROUP BY post_id';
     $postComments = dbFetchData($connection, $postCommentsSql, [$postIdQuery]);
 
-    $postAuthorSql = 'SELECT login, registration_date, avatar, count(posts.id) FROM users JOIN posts ON posts.user_id = users.id WHERE users.id = ? GROUP BY posts.user_id';
+    $postAuthorSql = 'SELECT login, registration_date, avatar, count(posts.id) AS posts_count FROM users JOIN posts ON posts.user_id = users.id WHERE users.id = ? GROUP BY posts.user_id';
     $postAuthor = dbFetchData($connection, $postAuthorSql, [$post['user_id']], true);
     $postAuthor['reg_duration'] = getRelativeTime($postAuthor['registration_date']);
     var_dump($postAuthor);
