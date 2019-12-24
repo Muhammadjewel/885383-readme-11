@@ -1,7 +1,12 @@
 <?php
 require_once('helpers.php');
 
-$pageContent = include_template('add.php');
+$contentTypesSql = 'SELECT * FROM content_types';
+$contentTypes = dbFetchData($connection, $contentTypesSql, []);
+
+$pageContent = include_template('add.php', [
+    'contentTypes' => $contentTypes
+]);
 
 $layoutContent = include_template('layout.php', [
     'pageContent' => $pageContent,
