@@ -15,9 +15,10 @@ if ($postIdQuery && $requiredPost != null) {
     $postCommentsSql = 'SELECT *, count(id) AS comments_count FROM comments WHERE post_id = ? GROUP BY post_id';
     $postComments = dbFetchData($connection, $postCommentsSql, [$postIdQuery]);
 
-    $postAuthorSql = 'SELECT login, registration_date, avatar FROM users WHERE users.id = ?';
+    $postAuthorSql = 'SELECT login, registration_date, avatar, count(posts.id) FROM users JOIN posts ON posts.user_id = users.id WHERE users.id = ? GROUP BY posts.user_id';
     $postAuthor = dbFetchData($connection, $postAuthorSql, [$post['user_id']], true);
     $postAuthor['reg_duration'] = getRelativeTime($postAuthor['registration_date']);
+    var_dump($postAuthor);
 
     if ($post['class'] == 'quote') {
         $postBody = include_template('post-quote.php', ['post' => $post]);
