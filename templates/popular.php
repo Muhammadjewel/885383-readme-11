@@ -38,13 +38,13 @@
                 <ul class="popular__filters-list filters__list">
                     <li class="popular__filters-item popular__filters-item--all filters__item filters__item--all">
                         <a class="filters__button filters__button--ellipse filters__button--all <?=$contentTypeQuery == null ? 'filters__button--active' : ''; ?>"
-                           href="#">
+                           href="/popular.php">
                             <span>Все</span>
                         </a>
                     </li>
                     <?php foreach($contentTypes as $contentType): ?>
                     <li class="popular__filters-item filters__item">
-                        <a class="filters__button filters__button--<?=$contentType['class'];?> button <?=$contentTypeQuery == $contentType['id'] ? 'filters__button--active' : ''; ?>" href="/?content_type=<?=$contentType['id'];?>">
+                        <a class="filters__button filters__button--<?=$contentType['class'];?> button <?=$contentTypeQuery == $contentType['id'] ? 'filters__button--active' : ''; ?>" href="/popular.php?content_type=<?=$contentType['id'];?>">
                             <span class="visually-hidden"><?=$contentType['type_name'];?></span>
                             <svg class="filters__icon" width="22" height="18">
                                 <use xlink:href="#icon-filter-<?=$contentType['class'];?>"></use>
