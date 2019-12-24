@@ -12,6 +12,9 @@ if ($postIdQuery && $requiredPost != null) {
     $postLikesCount = dbFetchData($connection, 'SELECT count(id) AS likes FROM likes WHERE post_id = ? GROUP BY id', [$post['id']], true)['likes'];
     $post['likes'] = $postLikesCount ?? 0;
 
+    $postCommentsSql = 'SELECT *, count(id) AS comments_count FROM comments WHERE post_id = ? GROUP BY post_id';
+    $postComments = dbFetchData($connection, $postCommentsSql, [$postIdQuery]);
+
     $postAuthorSql = 'SELECT login, registration_date, avatar FROM users WHERE users.id = ?';
     $postAuthor = dbFetchData($connection, $postAuthorSql, [$post['user_id']], true);
     $postAuthor['reg_duration'] = getRelativeTime($postAuthor['registration_date']);
