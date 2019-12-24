@@ -18,7 +18,6 @@ if ($postIdQuery && $requiredPost != null) {
     $postAuthorSql = 'SELECT login, registration_date, avatar, count(posts.id) AS posts_count FROM users JOIN posts ON posts.user_id = users.id WHERE users.id = ? GROUP BY posts.user_id';
     $postAuthor = dbFetchData($connection, $postAuthorSql, [$post['user_id']], true);
     $postAuthor['reg_duration'] = getRelativeTime($postAuthor['registration_date']);
-    var_dump($postAuthor);
 
     if ($post['class'] == 'quote') {
         $postBody = include_template('post-quote.php', ['post' => $post]);
