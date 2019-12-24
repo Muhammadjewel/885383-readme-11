@@ -3,9 +3,9 @@ require_once('helpers.php');
 
 $postIdQuery = filter_input(INPUT_GET, 'id', FILTER_SANITIZE_NUMBER_INT);
 
-$isPostExistent = dbFetchData($connection, 'SELECT * FROM posts WHERE posts.id = ?', [$postIdQuery]);
+$requiredPost = dbFetchData($connection, 'SELECT * FROM posts WHERE posts.id = ?', [$postIdQuery]);
 
-if ($postIdQuery && $isPostExistent != null) {
+if ($postIdQuery && $requiredPost != null) {
     $selectPostByIdSql = 'SELECT posts.*, content_types.class AS class FROM posts JOIN content_types ON posts.content_type_id = content_types.id WHERE posts.id = ?';
     $post = dbFetchData($connection, $selectPostByIdSql, [$postIdQuery], true);
 
